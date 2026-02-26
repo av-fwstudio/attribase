@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Attribase - Custom Product Attributes for Shopify</title>
+  <meta name="description" content="Add custom product options with dynamic pricing to your Shopify store. Dropdowns, color swatches, text inputs, and more.">
+  <meta property="og:title" content="Attribase - Custom Product Attributes for Shopify">
+  <meta property="og:description" content="Add custom product options with dynamic pricing to your Shopify store.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://fabwebstudio.com/apps/attribase">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; color: #1a1a1a; line-height: 1.6; background: #fff; }
+    a { color: #16a34a; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* Header */
+    .header { border-bottom: 1px solid #e5e7eb; padding: 16px 0; }
+    .header-inner { max-width: 1100px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-weight: 700; font-size: 18px; color: #1a1a1a; }
+    .logo span { color: #16a34a; }
+    .header-links { display: flex; gap: 24px; font-size: 14px; }
+    .header-links a { color: #6b7280; }
+    .header-links a:hover { color: #1a1a1a; }
+
+    /* Hero */
+    .hero { padding: 80px 24px; text-align: center; background: linear-gradient(180deg, #f0fdf4 0%, #fff 100%); }
+    .hero-inner { max-width: 720px; margin: 0 auto; }
+    .hero-badge { display: inline-block; background: #dcfce7; color: #16a34a; font-size: 13px; font-weight: 600; padding: 4px 14px; border-radius: 20px; margin-bottom: 20px; }
+    .hero h1 { font-size: 42px; font-weight: 700; line-height: 1.2; margin-bottom: 16px; letter-spacing: -0.5px; }
+    .hero p { font-size: 18px; color: #4b5563; max-width: 560px; margin: 0 auto 32px; }
+    .btn-primary { display: inline-block; background: #16a34a; color: #fff; font-size: 16px; font-weight: 600; padding: 14px 32px; border-radius: 8px; transition: background 0.2s; }
+    .btn-primary:hover { background: #15803d; text-decoration: none; }
+
+    /* Features */
+    .features { padding: 80px 24px; max-width: 1100px; margin: 0 auto; }
+    .features h2 { font-size: 28px; font-weight: 700; text-align: center; margin-bottom: 12px; }
+    .features > p { text-align: center; color: #6b7280; margin-bottom: 48px; font-size: 16px; }
+    .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px; }
+    .feature-card { padding: 28px; border: 1px solid #e5e7eb; border-radius: 12px; }
+    .feature-icon { width: 40px; height: 40px; background: #dcfce7; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; font-size: 20px; }
+    .feature-card h3 { font-size: 17px; font-weight: 600; margin-bottom: 8px; }
+    .feature-card p { font-size: 14px; color: #6b7280; line-height: 1.6; }
+
+    /* How it works */
+    .how-it-works { padding: 80px 24px; background: #f9fafb; }
+    .how-it-works-inner { max-width: 800px; margin: 0 auto; }
+    .how-it-works h2 { font-size: 28px; font-weight: 700; text-align: center; margin-bottom: 48px; }
+    .steps { display: flex; flex-direction: column; gap: 32px; }
+    .step { display: flex; gap: 20px; align-items: flex-start; }
+    .step-num { width: 36px; height: 36px; background: #16a34a; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 15px; flex-shrink: 0; }
+    .step-content h3 { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+    .step-content p { font-size: 14px; color: #6b7280; }
+
+    /* Pricing */
+    .pricing { padding: 80px 24px; max-width: 800px; margin: 0 auto; }
+    .pricing h2 { font-size: 28px; font-weight: 700; text-align: center; margin-bottom: 12px; }
+    .pricing > p { text-align: center; color: #6b7280; margin-bottom: 48px; }
+    .pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .plan-card { border: 1px solid #e5e7eb; border-radius: 12px; padding: 32px; }
+    .plan-card.featured { border-color: #16a34a; box-shadow: 0 0 0 1px #16a34a; }
+    .plan-name { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+    .plan-price { font-size: 32px; font-weight: 700; margin-bottom: 4px; }
+    .plan-price span { font-size: 15px; font-weight: 400; color: #6b7280; }
+    .plan-trial { font-size: 13px; color: #16a34a; margin-bottom: 20px; }
+    .plan-features { list-style: none; font-size: 14px; color: #4b5563; }
+    .plan-features li { padding: 6px 0; padding-left: 22px; position: relative; }
+    .plan-features li::before { content: "\2713"; position: absolute; left: 0; color: #16a34a; font-weight: 700; }
+
+    /* Field types */
+    .field-types { padding: 80px 24px; }
+    .field-types-inner { max-width: 800px; margin: 0 auto; text-align: center; }
+    .field-types h2 { font-size: 28px; font-weight: 700; margin-bottom: 12px; }
+    .field-types > p { color: #6b7280; margin-bottom: 32px; }
+    .field-tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+    .field-tag { background: #f3f4f6; color: #374151; font-size: 14px; font-weight: 500; padding: 8px 16px; border-radius: 8px; }
+
+    /* CTA */
+    .cta { padding: 80px 24px; text-align: center; background: #f0fdf4; }
+    .cta h2 { font-size: 28px; font-weight: 700; margin-bottom: 12px; }
+    .cta p { color: #6b7280; margin-bottom: 32px; font-size: 16px; }
+
+    /* Footer */
+    .footer { border-top: 1px solid #e5e7eb; padding: 32px 24px; text-align: center; }
+    .footer-inner { max-width: 1100px; margin: 0 auto; }
+    .footer-links { display: flex; justify-content: center; gap: 24px; margin-bottom: 16px; font-size: 14px; }
+    .footer-links a { color: #6b7280; }
+    .footer-copy { font-size: 13px; color: #9ca3af; }
+
+    @media (max-width: 640px) {
+      .hero h1 { font-size: 28px; }
+      .hero { padding: 48px 24px; }
+      .features, .pricing, .how-it-works, .field-types, .cta { padding: 48px 24px; }
+      .pricing-grid { grid-template-columns: 1fr; }
+      .features-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="header-inner">
+      <a href="/" class="logo"><img alt="FAB Web Studio" loading="lazy" width="100" height="100" src="https://res.cloudinary.com/dkdsxusqu/image/upload/v1743505667/logo_7560961f97.svg" style="height:40px;width:auto"></a>
+      <nav class="header-links">
+        <a href="/apps/attribase/privacy">Privacy</a>
+        <a href="/apps/attribase/support">Support</a>
+        <a href="mailto:support@fabwebstudio.com">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-badge">Shopify App</div>
+      <h1>Custom product attributes with dynamic pricing</h1>
+      <p>Add dropdowns, color swatches, text inputs, date pickers, and more to any product. Prices update automatically at checkout.</p>
+      <a href="https://apps.shopify.com/attribase" class="btn-primary">Install Free on Shopify</a>
+    </div>
+  </section>
+
+  <section class="how-it-works">
+    <div class="how-it-works-inner">
+      <h2>How it works</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h3>Create an attribute group</h3>
+            <p>Define reusable sets of custom fields — dropdowns, radio buttons, text inputs, color swatches, and more. Add price adjustments to any option.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h3>Assign to products</h3>
+            <p>Connect your attribute groups to products with one click. One group can be reused across many products.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h3>Customers customize and buy</h3>
+            <p>Custom fields appear on your storefront in your theme's style. Prices adjust automatically at checkout using Shopify's Cart Transform API.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="features">
+    <h2>Everything you need for product customization</h2>
+    <p>No code required. Works with all Shopify themes.</p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">&#9881;</div>
+        <h3>11 Field Types</h3>
+        <p>Dropdown, radio buttons, checkboxes, text, number, date, color swatch, boolean toggle, and more. Every field type a product could need.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">&#36;</div>
+        <h3>Dynamic Pricing</h3>
+        <p>Add price adjustments to any option. +$5 for gift wrapping, +$30 for premium material. Prices calculate at checkout, not just on display.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">&#9851;</div>
+        <h3>Reusable Groups</h3>
+        <p>Create attribute groups once and assign to many products. Change the group, and every product updates automatically.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">&#127912;</div>
+        <h3>Theme Compatible</h3>
+        <p>Works with Dawn, Horizon, Refresh, and all Online Store 2.0 themes. Options render in your theme's native style.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">&#128274;</div>
+        <h3>Your Data, Your Store</h3>
+        <p>All data stored in Shopify metaobjects. Your attribute groups and product assignments stay in your store even if you uninstall.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">&#9889;</div>
+        <h3>No Code Required</h3>
+        <p>Everything configured through a visual admin dashboard. Add the theme block in one click. No liquid editing needed.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="field-types">
+    <div class="field-types-inner">
+      <h2>Supported field types</h2>
+      <p>Every field type your products could need.</p>
+      <div class="field-tags">
+        <span class="field-tag">Dropdown</span>
+        <span class="field-tag">Radio Buttons</span>
+        <span class="field-tag">Checkboxes</span>
+        <span class="field-tag">Text Input</span>
+        <span class="field-tag">Number</span>
+        <span class="field-tag">Date Picker</span>
+        <span class="field-tag">Color Swatch</span>
+        <span class="field-tag">Boolean Toggle</span>
+        <span class="field-tag">Textarea</span>
+        <span class="field-tag">Email</span>
+        <span class="field-tag">URL</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="pricing">
+    <h2>Simple, transparent pricing</h2>
+    <p>Start free. Upgrade when you need more.</p>
+    <div class="pricing-grid">
+      <div class="plan-card">
+        <div class="plan-name">Free</div>
+        <div class="plan-price">$0</div>
+        <div class="plan-trial">&nbsp;</div>
+        <ul class="plan-features">
+          <li>2 attribute groups</li>
+          <li>3 customized products</li>
+          <li>All basic field types</li>
+          <li>Theme block included</li>
+          <li>No credit card required</li>
+        </ul>
+      </div>
+      <div class="plan-card featured">
+        <div class="plan-name">Pro</div>
+        <div class="plan-price">$9.99 <span>/month</span></div>
+        <div class="plan-trial">7-day free trial</div>
+        <ul class="plan-features">
+          <li>Unlimited attribute groups</li>
+          <li>Unlimited products</li>
+          <li>All 11 field types</li>
+          <li>Dynamic pricing</li>
+          <li>Priority support</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <h2>Ready to customize your products?</h2>
+    <p>Install Attribase free and create your first attribute group in minutes.</p>
+    <a href="https://apps.shopify.com/attribase" class="btn-primary">Install Free on Shopify</a>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-links">
+        <a href="/apps/attribase/privacy">Privacy Policy</a>
+        <a href="/apps/attribase/support">Support</a>
+        <a href="/apps/attribase/terms">Terms of Service</a>
+        <a href="mailto:support@fabwebstudio.com">Contact</a>
+      </div>
+      <div class="footer-copy">&copy; 2026 FAB Web Studio. All rights reserved.</div>
+    </div>
+  </footer>
+
+</body>
+</html>
